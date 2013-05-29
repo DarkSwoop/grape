@@ -46,7 +46,7 @@ module Grape
             (! request.parseable_data?) &&
             (request.content_length.to_i > 0 || request.env['HTTP_TRANSFER_ENCODING'] == 'chunked')
 
-            if env['rack.input'] && (body = (env['api.request.input'] = env['rack.input'].read)).length > 0
+            if env['rack.input'] && env['rack.input'].rewind && (body = (env['api.request.input'] = env['rack.input'].read)).length > 0
               read_rack_input body
             end
           end
